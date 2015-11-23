@@ -89,9 +89,12 @@
   <ItemGroup>
     <Compile Include="GraphSearchTestFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SearchFringes\AStarSearchFringeTestFixture.cs" />
     <Compile Include="SearchFringes\BreadthFirstSearchTestFixture.cs" />
     <Compile Include="SearchFringes\DepthFirstSearchFringeTestFixture.cs" />
-    <Compile Include="SearchFringes\GreedySearchTestFixture.cs" />
+    <Compile Include="SearchFringes\GreedySearchFringeTestFixture.cs" />
+    <Compile Include="SearchFringes\PriorityQueueDrivenFringeBaseTestFixture.cs" />
+    <Compile Include="SearchFringes\UniformCostSearchFringeTestFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

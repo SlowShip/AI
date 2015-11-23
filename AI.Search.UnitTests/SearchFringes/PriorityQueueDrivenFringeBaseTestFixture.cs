@@ -1,6 +1,4 @@
 ﻿using AI.Search.SearchFringes;
-using C5;
-using Moq;
 using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.AutoMoq;
 using System;
@@ -12,25 +10,33 @@ using Xunit;
 
 namespace AI.Search.UnitTests.SearchFringes
 {
-    public class GreedySearchTestFixture
+    public class PriorityQueueDrivenFringeBaseTestFixture
     {
         IFixture fixture;
-        Mock<IHuristic<TestState>> huristicMock; 
 
-        public class TestState { }
+        public class TestState
+        {
+            public int Order { get; set; }
+        }
 
-        public GreedySearchTestFixture()
+        public class TestFringe : PriorityQueueDrivenFringeBase<TestState>
+        {
+            public override int GetQueueOrder(TestState state)
+            {
+                return state.Order;
+            }
+        }
+
+        public PriorityQueueDrivenFringeBaseTestFixture()
         {
             fixture = new Fixture().Customize(new AutoMoqCustomization());
-
-            huristicMock = fixture.Freeze<Mock<IHuristic<TestState>>>();
         }
 
         [Fact]
         public void Add_WithNullNode_ThrowsAnArgumentNullException()
         {
             // Arrange
-            var subject = fixture.Create<GreedySearchFringe<TestState>>();
+            var subject = fixture.Create<TestFringe>();
 
             // Act
             Action act = () => subject.Add(null);
@@ -45,8 +51,8 @@ namespace AI.Search.UnitTests.SearchFringes
         public void Add_WithoutNullNode_DoesNotThrowAnException()
         {
             // Arrange
-            var node = new TestState();
-            var subject = fixture.Create<GreedySearchFringe<TestState>>();
+            var node = fixture.Create<TestState>();
+            var subject = fixture.Create<TestFringe>();
 
             // Act
             Action act = () => subject.Add(node);
@@ -59,7 +65,7 @@ namespace AI.Search.UnitTests.SearchFringes
         public void GetNext_WhenTheFringeIsEmpty_ShouldThrowAnInvalidOpperationException()
         {
             // Arrange
-            var subject = fixture.Create<GreedySearchFringe<TestState>>();
+            var subject = fixture.Create<TestFringe>();
 
             // Act
             Action act = () => subject.GetNext();
@@ -73,9 +79,9 @@ namespace AI.Search.UnitTests.SearchFringes
         public void GetNext_WhenTheFringeIsNotEmpty_ShouldReturnAnAddedItem()
         {
             // Arrange
-            var expected = new TestState();
+            var expected = fixture.Create<TestState>();
 
-            var subject = fixture.Create<GreedySearchFringe<TestState>>();
+            var subject = fixture.Create<TestFringe>();
             subject.Add(expected);
 
             // Act
@@ -86,48 +92,35 @@ namespace AI.Search.UnitTests.SearchFringes
         }
 
         [Fact]
-        public void GetNext_WhenTheFringeIsNotEmpty_ShouldReturnItemsOrderOfTheirHuristicValue()
+        public void GetNext_WhenTheFringeIsNotEmpty_ShouldReturnItemsOrderOfTheirPriority()
         {
             // Arrange
-            var in_1 = new TestState();
-            var in_2 = new TestState();
-            var in_3 = new TestState();
-            var in_4 = new TestState();
-            var in_5 = new TestState();
+            var count = 100;
+            var inItems = fixture.CreateMany<TestState>(count).ToArray(); ;
 
-            huristicMock.Setup(h => h.GetHuristicValue(in_1)).Returns(4);
-            huristicMock.Setup(h => h.GetHuristicValue(in_2)).Returns(5);
-            huristicMock.Setup(h => h.GetHuristicValue(in_3)).Returns(2);
-            huristicMock.Setup(h => h.GetHuristicValue(in_4)).Returns(1);
-            huristicMock.Setup(h => h.GetHuristicValue(in_5)).Returns(3);
-
-            var subject = fixture.Create<GreedySearchFringe<TestState>>();
-            subject.Add(in_1);
-            subject.Add(in_2);
-            subject.Add(in_3);
-            subject.Add(in_4);
-            subject.Add(in_5);
+            var subject = fixture.Create<TestFringe>();
+            foreach (var item in inItems)
+            {
+                subject.Add(item);
+            }
 
             // Act
-            var out_1 = subject.GetNext();
-            var out_2 = subject.GetNext();
-            var out_3 = subject.GetNext();
-            var out_4 = subject.GetNext();
-            var out_5 = subject.GetNext();
+            var outItems = Enumerable.Range(1, count).Select(x => subject.GetNext()).ToArray();
 
             // Assert
-            Assert.Equal(out_1, in_4);
-            Assert.Equal(out_2, in_3);
-            Assert.Equal(out_3, in_5);
-            Assert.Equal(out_4, in_1);
-            Assert.Equal(out_5, in_2);
+            var inItemsOrdered = inItems.OrderBy(i => i.Order).ToArray();
+
+            for (int i = 0; i < count; i++)
+            {
+                Assert.Equal(outItems[i], inItemsOrdered[i]);
+            }
         }
 
         [Fact]
         public void IsEmpty_StraightAfterCreation_ShouldReturnTrue()
         {
             // Arrange
-            var subject = fixture.Create<GreedySearchFringe<TestState>>();
+            var subject = fixture.Create<TestFringe>();
 
             // Act
             var result = subject.IsEmpty();
@@ -140,8 +133,8 @@ namespace AI.Search.UnitTests.SearchFringes
         public void IsEmpty_AfterSomeItemsHaveBeenAdded_ShouldReturnFalse()
         {
             // Arrange
-            var subject = fixture.Create<GreedySearchFringe<TestState>>();
-            subject.Add(new TestState());
+            var subject = fixture.Create<TestFringe>();
+            subject.Add(fixture.Create<TestState>());
 
             // Act
             var result = subject.IsEmpty();
@@ -154,11 +147,11 @@ namespace AI.Search.UnitTests.SearchFringes
         public void IsEmpty_WhenTheSameNumberOfItemsHaveBeenRemovedAsWereAdded_ShouldReturnTrue()
         {
             // Arrange
-            var subject = fixture.Create<GreedySearchFringe<TestState>>();
+            var subject = fixture.Create<TestFringe>();
 
-            subject.Add(new TestState());
-            subject.Add(new TestState());
-            subject.Add(new TestState());
+            subject.Add(fixture.Create<TestState>());
+            subject.Add(fixture.Create<TestState>());
+            subject.Add(fixture.Create<TestState>());
 
             subject.GetNext();
             subject.GetNext();
@@ -175,11 +168,11 @@ namespace AI.Search.UnitTests.SearchFringes
         public void IsEmpty_AfterMoreItemsHaveBeenAddedThanRemoved_ShouldReturnFalse()
         {
             // Arrange
-            var subject = fixture.Create<GreedySearchFringe<TestState>>();
+            var subject = fixture.Create<TestFringe>();
 
-            subject.Add(new TestState());
-            subject.Add(new TestState());
-            subject.Add(new TestState());
+            subject.Add(fixture.Create<TestState>());
+            subject.Add(fixture.Create<TestState>());
+            subject.Add(fixture.Create<TestState>());
 
             subject.GetNext();
             subject.GetNext();

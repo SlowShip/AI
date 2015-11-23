@@ -44,14 +44,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GraphSearch.cs" />
+    <Compile Include="ICostTracked.cs" />
     <Compile Include="IFringe.cs" />
     <Compile Include="IHuristic.cs" />
     <Compile Include="IProblem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SearchFringes\AStarFringe.cs" />
+    <Compile Include="SearchFringes\AStarSearchFringe.cs" />
     <Compile Include="SearchFringes\BreadthFirstSearchFringe.cs" />
     <Compile Include="SearchFringes\DepthFirstSearchFringe.cs" />
     <Compile Include="SearchFringes\GreedySearchFringe.cs" />
+    <Compile Include="SearchFringes\PriorityQueueDrivenFringeBase.cs" />
+    <Compile Include="SearchFringes\UniformCostSearchFringe.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
