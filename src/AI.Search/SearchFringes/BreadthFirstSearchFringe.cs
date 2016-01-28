@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AI.Search.SearchFringes
 {
@@ -10,13 +8,13 @@ namespace AI.Search.SearchFringes
     {
         private Queue<TState> items = new Queue<TState>();
 
-        public void Add(TState node)
+        public void Add(TState state)
         {
-            if (node == null)
+            if (state == null)
             {
-                throw new ArgumentNullException(nameof(node));
+                throw new ArgumentNullException(nameof(state));
             }
-            items.Enqueue(node);
+            items.Enqueue(state);
         }
 
         public TState GetNext()

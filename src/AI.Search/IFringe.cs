@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AI.Search
+﻿namespace AI.Search
 {
-    public interface IFringeStrategy<TNode>
+    public interface IFringeStrategy<TState>
     {
         bool IsEmpty();
-        TNode GetNext();
-        void Add(TNode node);
+        TState GetNext();
+        void Add(TState state);
     }
 }

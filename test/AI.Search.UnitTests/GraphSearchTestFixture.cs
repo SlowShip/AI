@@ -1,14 +1,10 @@
-﻿using AI.Search;
-using Moq;
+﻿using Moq;
 using Moq.Sequences;
 using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.AutoMoq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AI.Search.UnitTests
@@ -269,14 +265,14 @@ namespace AI.Search.UnitTests
         public void Execute_ReturnsTheFirstGoalStateOffTheFringe()
         {
             // Arrange
-            var nodeBuilder = fixture.Build<TestState>();
-            var secondGoal = nodeBuilder.Create();
+            var stateBuilder = fixture.Build<TestState>();
+            var secondGoal = stateBuilder.Create();
 
             strategy.SetupSequence(strat => strat.GetNext())
-                .Returns(nodeBuilder.Create())
-                .Returns(nodeBuilder.Create())
+                .Returns(stateBuilder.Create())
+                .Returns(stateBuilder.Create())
                 .Returns(goalState)
-                .Returns(nodeBuilder.Create())
+                .Returns(stateBuilder.Create())
                 .Returns(secondGoal);
 
             problem.Setup(prob => prob.IsGoalState(secondGoal)).Returns(true);
@@ -291,7 +287,7 @@ namespace AI.Search.UnitTests
         }
 
         [Fact]
-        public void Execute_DoesNotExpandNodesAfterTheGoalStateIsFound()
+        public void Execute_DoesNotExpandStatesAfterTheGoalStateIsFound()
         {
             // Arrange
             var afterGoal = fixture.Create<TestState>();

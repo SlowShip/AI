@@ -1,9 +1,5 @@
 ﻿using AI.Search.SearchFringes;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AI.Search.UnitTests.SearchFringes
@@ -13,7 +9,7 @@ namespace AI.Search.UnitTests.SearchFringes
         public class TestState { }
 
         [Fact]
-        public void Add_WithNullNode_ThrowsAnArgumentNullException()
+        public void Add_WithNullState_ThrowsAnArgumentNullException()
         {
             // Arrange
             var subject = new DepthFirstSearchFringe<TestState>();
@@ -23,19 +19,19 @@ namespace AI.Search.UnitTests.SearchFringes
 
             // Assert
             var ex = Assert.Throws<ArgumentNullException>(act);
-            Assert.Equal("node", ex.ParamName);
+            Assert.Equal("state", ex.ParamName);
             Assert.NotNull(ex.Message);
         }
 
         [Fact]
-        public void Add_WithoutNullNode_DoesNotThrowAnException()
+        public void Add_WithoutNullState_DoesNotThrowAnException()
         {
             // Arrange
-            var node = new TestState();
+            var state = new TestState();
             var subject = new DepthFirstSearchFringe<TestState>();
 
             // Act
-            Action act = () => subject.Add(node);
+            Action act = () => subject.Add(state);
 
             // Assert
             act();

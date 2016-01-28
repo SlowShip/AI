@@ -1,9 +1,6 @@
 ﻿using C5;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AI.Search.SearchFringes
 {
@@ -13,14 +10,14 @@ namespace AI.Search.SearchFringes
 
         public abstract int GetQueueOrder(TState state);
 
-        public void Add(TState node)
+        public void Add(TState state)
         {
-            if (node == null)
+            if (state == null)
             {
-                throw new ArgumentNullException(nameof(node));
+                throw new ArgumentNullException(nameof(state));
             }
-            var order = GetQueueOrder(node);
-            items.Add(new PriorityWrapper(node, order));
+            var order = GetQueueOrder(state);
+            items.Add(new PriorityWrapper(state, order));
         }
 
         public TState GetNext()

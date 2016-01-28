@@ -2,10 +2,7 @@
 using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.AutoMoq;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AI.Search.UnitTests.SearchFringes
@@ -33,7 +30,7 @@ namespace AI.Search.UnitTests.SearchFringes
         }
 
         [Fact]
-        public void Add_WithNullNode_ThrowsAnArgumentNullException()
+        public void Add_WithNullState_ThrowsAnArgumentNullException()
         {
             // Arrange
             var subject = fixture.Create<TestFringe>();
@@ -43,19 +40,19 @@ namespace AI.Search.UnitTests.SearchFringes
 
             // Assert
             var ex = Assert.Throws<ArgumentNullException>(act);
-            Assert.Equal("node", ex.ParamName);
+            Assert.Equal("state", ex.ParamName);
             Assert.NotNull(ex.Message);
         }
 
         [Fact]
-        public void Add_WithoutNullNode_DoesNotThrowAnException()
+        public void Add_WithoutNullState_DoesNotThrowAnException()
         {
             // Arrange
-            var node = fixture.Create<TestState>();
+            var state = fixture.Create<TestState>();
             var subject = fixture.Create<TestFringe>();
 
             // Act
-            Action act = () => subject.Add(node);
+            Action act = () => subject.Add(state);
 
             // Assert
             act();
