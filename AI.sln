@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{73016AF7-7220-48A8-B334-C790AFC0F601}"
 EndProject
@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{06CCD2A6-4
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AI.Search", "src\AI.Search\AI.Search.csproj", "{D568C51A-F04E-40D6-98C0-27FBD98786F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AI.Search.UnitTests", "AI.Search.UnitTests\AI.Search.UnitTests.csproj", "{D500974E-1F02-495F-AD9C-720828AD2B2D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AI.Search.UnitTests", "test\AI.Search.UnitTests\AI.Search.UnitTests.csproj", "{D500974E-1F02-495F-AD9C-720828AD2B2D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
