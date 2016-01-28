@@ -312,7 +312,7 @@ namespace AI.Search.UnitTests
         }
 
         [Fact]
-        public void Execute_WhenTheSameStateOccursMultipleTimesOnlyExpandsItOnce()
+        public void Execute_WhenTheSameStateOccursMultipleTimes_OnlyExpandsItOnce()
         {
             // Arrange
             var someState = fixture.Create<TestState>();
@@ -331,6 +331,35 @@ namespace AI.Search.UnitTests
             // Assert
             problem.Verify(prob => prob.IsGoalState(someState), Times.Once);
             problem.Verify(prob => prob.GetSuccessors(someState), Times.Once);
+        }
+
+        [Fact]
+        public void Execute_WhenTheSameStateOccursMultipleTimesAccordingToTheStateEqualityComparer_OnlyExpandsItOnce()
+        {
+            // Arrange
+            var someState = fixture.Create<TestState>();
+            var someOtherState = fixture.Create<TestState>();
+            var equalToSomeState = fixture.Create<TestState>();
+
+            var equalityComparer = fixture.Create<Mock<IEqualityComparer<TestState>>>();
+            equalityComparer.Setup(comparer => comparer.Equals(It.IsAny<TestState>(), It.IsAny<TestState>())).Returns(false);
+            equalityComparer.Setup(comparer => comparer.Equals(someState, equalToSomeState)).Returns(true);
+
+            strategy.SetupSequence(strat => strat.GetNext())
+                .Returns(startState)
+                .Returns(someState)
+                .Returns(someOtherState)
+                .Returns(equalToSomeState)
+                .Returns(goalState);
+
+            var subject = new GraphSearch<TestState>();
+
+            // Act
+            subject.Execute(problem.Object, strategy.Object, equalityComparer.Object);
+
+            // Assert
+            problem.Verify(prob => prob.IsGoalState(equalToSomeState), Times.Never);
+            problem.Verify(prob => prob.GetSuccessors(equalToSomeState), Times.Never);
         }
     }
 }

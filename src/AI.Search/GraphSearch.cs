@@ -14,14 +14,20 @@ namespace AI.Search
 
     public class GraphSearch<TState>
     {
-        // Todo, can this be made more efficient using recursion?
-        public TState Execute(IProblem<TState> problem, IFringeStrategy<TState> strategy)
+        // Todo, can this be made more efficient or cleaner using recursion?
+        public TState Execute(IProblem<TState> problem, IFringeStrategy<TState> strategy, IEqualityComparer<TState> stateEqualityComparer = default(IEqualityComparer<TState>))
         {
-            if (problem == null) { throw new ArgumentNullException(nameof(problem)); }
-            if (strategy == null) { throw new ArgumentNullException(nameof(strategy)); }
+            if (problem == null)
+            {
+                throw new ArgumentNullException(nameof(problem));
+            }
 
-            // Todo can a custom equality comparer make this better so graph search acutally works?
-            var evaluatedStates = new HashSet<TState>();
+            if (strategy == null)
+            {
+                throw new ArgumentNullException(nameof(strategy));
+            }
+
+            var evaluatedStates = new HashSet<TState>(stateEqualityComparer);
             var startState = problem.GetStartingState();
             strategy.Add(startState);
 
