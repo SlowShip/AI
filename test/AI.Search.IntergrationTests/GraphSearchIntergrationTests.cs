@@ -16,10 +16,10 @@ namespace AI.Search.IntergrationTests
         {
             // Arrange
             var problem = new TriForkTestProblem();
-            var search = new GraphSearch<TestState>();
+            var search = new GraphSearch<TestState>(new DepthFirstSearchFringe<TestState>(), new TestStateEqualityComparer());
 
             // Act
-            var result = search.Execute(problem, new DepthFirstSearchFringe<TestState>(), new TestStateEqualityComparer());
+            var result = search.Execute(problem);
 
             // Assert
             var expanded = problem.Expanded.Select(s => s.Node.Name);
@@ -34,10 +34,10 @@ namespace AI.Search.IntergrationTests
         {
             // Arrange
             var problem = new TriForkTestProblem();
-            var search = new GraphSearch<TestState>();
+            var search = new GraphSearch<TestState>(new BreadthFirstSearchFringe<TestState>(), new TestStateEqualityComparer());
 
             // Act
-            var result = search.Execute(problem, new BreadthFirstSearchFringe<TestState>(), new TestStateEqualityComparer());
+            var result = search.Execute(problem);
 
             // Assert
             var expanded = problem.Expanded.Select(s => s.Node.Name);
@@ -52,10 +52,10 @@ namespace AI.Search.IntergrationTests
         {
             // Arrange
             var problem = new TriForkTestProblem();
-            var search = new GraphSearch<TestState>();
+            var search = new GraphSearch<TestState>(new UniformCostSearchFringe<TestState>(), new TestStateEqualityComparer());
 
             // Act
-            var result = search.Execute(problem, new UniformCostSearchFringe<TestState>(), new TestStateEqualityComparer());
+            var result = search.Execute(problem);
 
             // Assert
             var expanded = problem.Expanded.Select(s => s.Node.Name);
@@ -70,10 +70,10 @@ namespace AI.Search.IntergrationTests
         {
             // Arrange
             var problem = new TriForkTestProblem();
-            var search = new GraphSearch<TestState>();
+            var search = new GraphSearch<TestState>(new GreedySearchFringe<TestState>(new TestStateHuristic()), new TestStateEqualityComparer());
 
             // Act
-            var result = search.Execute(problem, new GreedySearchFringe<TestState>(new TestStateHuristic()), new TestStateEqualityComparer());
+            var result = search.Execute(problem);
 
             // Assert
             var expanded = problem.Expanded.Select(s => s.Node.Name);
@@ -88,10 +88,10 @@ namespace AI.Search.IntergrationTests
         {
             // Arrange
             var problem = new TriForkTestProblem();
-            var search = new GraphSearch<TestState>();
+            var search = new GraphSearch<TestState>(new AStarSearchFringe<TestState>(new TestStateHuristic()), new TestStateEqualityComparer());
 
             // Act
-            var result = search.Execute(problem, new AStarSearchFringe<TestState>(new TestStateHuristic()), new TestStateEqualityComparer());
+            var result = search.Execute(problem);
 
             // Assert
             var expanded = problem.Expanded.Select(s => s.Node.Name);

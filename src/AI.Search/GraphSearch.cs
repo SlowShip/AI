@@ -11,17 +11,26 @@ namespace AI.Search
 
     public class GraphSearch<TState>
     {
+        private readonly IEqualityComparer<TState> stateEqualityComparer;
+        private readonly IFringeStrategy<TState> strategy;
+
+        public GraphSearch(IFringeStrategy<TState> strategy, IEqualityComparer<TState> stateEqualityComparer = null)
+        {
+            if (strategy == null)
+            {
+                throw new ArgumentNullException(nameof(strategy));
+            }
+            
+            this.strategy = strategy;
+            this.stateEqualityComparer = stateEqualityComparer ?? default(IEqualityComparer<TState>);
+        }
+
         // Todo, can this be made more efficient or cleaner using recursion?
-        public TState Execute(IProblem<TState> problem, IFringeStrategy<TState> strategy, IEqualityComparer<TState> stateEqualityComparer = default(IEqualityComparer<TState>))
+        public TState Execute(IProblem<TState> problem)
         {
             if (problem == null)
             {
                 throw new ArgumentNullException(nameof(problem));
-            }
-
-            if (strategy == null)
-            {
-                throw new ArgumentNullException(nameof(strategy));
             }
 
             var evaluatedStates = new HashSet<TState>(stateEqualityComparer);

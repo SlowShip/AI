@@ -41,27 +41,12 @@ namespace AI.Search.UnitTests
         }
         
         [Fact]
-        public void Execute_WhenProblemIsNull_ThrowsAnArgumentNullException()
+        public void Ctor_WhenStrategyIsNull_ThrowsAnArgumentNullException()
         {
             // Arrange
-            var subject = new GraphSearch<TestState>();
 
             // Act
-            Action act = () => subject.Execute(null, strategy.Object);
-
-            // Assert
-            var ex = Assert.Throws<ArgumentNullException>(act);
-            Assert.Equal(nameof(problem), ex.ParamName);
-        }
-
-        [Fact]
-        public void Execute_WhenStrategyIsNull_ThrowsAnArgumentNullException()
-        {
-            // Arrange
-            var subject = new GraphSearch<TestState>();
-
-            // Act
-            Action act = () => subject.Execute(problem.Object, null);
+            Action act = () => new GraphSearch<TestState>(null);
 
             // Assert
             var ex = Assert.Throws<ArgumentNullException>(act);
@@ -69,15 +54,30 @@ namespace AI.Search.UnitTests
         }
 
         [Fact]
+        public void Execute_WhenProblemIsNull_ThrowsAnArgumentNullException()
+        {
+            // Arrange
+            var subject = new GraphSearch<TestState>(strategy.Object);
+
+            // Act
+            Action act = () => subject.Execute(null);
+
+            // Assert
+            var ex = Assert.Throws<ArgumentNullException>(act);
+            Assert.Equal(nameof(problem), ex.ParamName);
+        }
+
+
+        [Fact]
         public void Execute_AddsTheStartStateToTheFringe()
         {
             // Arrange
             problem.Setup(prob => prob.IsGoalState(It.IsAny<TestState>())).Returns(true); // avoid infinite loop
 
-            var subject = new GraphSearch<TestState>();
+            var subject = new GraphSearch<TestState>(strategy.Object);
 
             // Act
-            subject.Execute(problem.Object, strategy.Object);
+            subject.Execute(problem.Object);
 
             // Assert
             strategy.Verify(strat => strat.Add(startState), Times.Once());
@@ -87,13 +87,13 @@ namespace AI.Search.UnitTests
         public void Execute_WhenTheStartStateIsAGoalState_DoesNotExpandAnyStates()
         {
             // Arrange
-            var subject = new GraphSearch<TestState>();
+            var subject = new GraphSearch<TestState>(strategy.Object);
 
             strategy.Setup(strat => strat.GetNext()).Returns(startState);
             problem.Setup(prob => prob.IsGoalState(startState)).Returns(true);
 
             // Act
-            subject.Execute(problem.Object, strategy.Object);
+            subject.Execute(problem.Object);
 
             // Assert
             problem.Verify(prob => prob.GetSuccessors(It.IsAny<TestState>()), Times.Never());
@@ -103,14 +103,14 @@ namespace AI.Search.UnitTests
         public void Execute_WhenTheStartStateIsNotAGoalState_ExpandsTheStartState()
         {
             // Arrange
-            var subject = new GraphSearch<TestState>();
+            var subject = new GraphSearch<TestState>(strategy.Object);
             
             strategy.SetupSequence(strat => strat.GetNext())
                 .Returns(startState)
                 .Returns(goalState);
 
             // Act
-            subject.Execute(problem.Object, strategy.Object);
+            subject.Execute(problem.Object);
 
             // Assert
             problem.Verify(prob => prob.GetSuccessors(startState), Times.Once());
@@ -130,10 +130,10 @@ namespace AI.Search.UnitTests
 
             problem.Setup(prob => prob.GetSuccessors(startState)).Returns(succesors);
 
-            var subject = new GraphSearch<TestState>();
+            var subject = new GraphSearch<TestState>(strategy.Object);
 
             // Act
-            subject.Execute(problem.Object, strategy.Object);
+            subject.Execute(problem.Object);
 
             // Assert
             strategy.Verify(strat => strat.Add(succesors[0]), Times.Once());
@@ -164,10 +164,10 @@ namespace AI.Search.UnitTests
                 problem.Setup(prob => prob.GetSuccessors(s2)).InSequence().Returns(fixture.CreateMany<TestState>());
                 problem.Setup(prob => prob.GetSuccessors(s3)).InSequence().Returns(fixture.CreateMany<TestState>());
 
-                var subject = new GraphSearch<TestState>();
+                var subject = new GraphSearch<TestState>(strategy.Object);
 
                 // Act
-                subject.Execute(problem.Object, strategy.Object);
+                subject.Execute(problem.Object);
 
                 // Assert
                 problem.Verify();
@@ -202,10 +202,10 @@ namespace AI.Search.UnitTests
                 strategy.Setup(strat => strat.Add(s3)).InSequence();
                 strategy.Setup(strat => strat.Add(goalState)).InSequence();
 
-                var subject = new GraphSearch<TestState>();
+                var subject = new GraphSearch<TestState>(strategy.Object);
 
                 // Act
-                subject.Execute(problem.Object, strategy.Object);
+                subject.Execute(problem.Object);
 
                 // Assert
                 strategy.VerifyAll();
@@ -232,10 +232,10 @@ namespace AI.Search.UnitTests
                 problem.Setup(prob => prob.IsGoalState(s2)).InSequence().Returns(false);
                 problem.Setup(prob => prob.IsGoalState(s3)).InSequence().Returns(true);
 
-                var subject = new GraphSearch<TestState>();
+                var subject = new GraphSearch<TestState>(strategy.Object);
 
                 // Act
-                subject.Execute(problem.Object, strategy.Object);
+                subject.Execute(problem.Object);
 
                 // Assert
                 problem.Verify();
@@ -251,10 +251,10 @@ namespace AI.Search.UnitTests
                 .Returns(false)
                 .Returns(true);
 
-            var subject = new GraphSearch<TestState>();
+            var subject = new GraphSearch<TestState>(strategy.Object);
 
             // Act
-            Action act = () => subject.Execute(problem.Object, strategy.Object);
+            Action act = () => subject.Execute(problem.Object);
 
             // Assert
             var ex = Assert.Throws<NoSolutionPossibleException>(act);
@@ -277,10 +277,10 @@ namespace AI.Search.UnitTests
 
             problem.Setup(prob => prob.IsGoalState(secondGoal)).Returns(true);
 
-            var subject = new GraphSearch<TestState>();
+            var subject = new GraphSearch<TestState>(strategy.Object);
 
             // Act
-            var result = subject.Execute(problem.Object, strategy.Object);
+            var result = subject.Execute(problem.Object);
 
             // Assert
             Assert.Equal(goalState, result);
@@ -297,10 +297,10 @@ namespace AI.Search.UnitTests
                 .Returns(goalState)
                 .Returns(afterGoal);
 
-            var subject = new GraphSearch<TestState>();
+            var subject = new GraphSearch<TestState>(strategy.Object);
 
             // Act
-            subject.Execute(problem.Object, strategy.Object);
+            subject.Execute(problem.Object);
 
             // Assert
             problem.Verify(prob => prob.IsGoalState(afterGoal), Times.Never);
@@ -319,10 +319,10 @@ namespace AI.Search.UnitTests
                 .Returns(someState)
                 .Returns(goalState);
 
-            var subject = new GraphSearch<TestState>();
+            var subject = new GraphSearch<TestState>(strategy.Object);
 
             // Act
-            subject.Execute(problem.Object, strategy.Object);
+            subject.Execute(problem.Object);
 
             // Assert
             problem.Verify(prob => prob.IsGoalState(someState), Times.Once);
@@ -348,10 +348,10 @@ namespace AI.Search.UnitTests
                 .Returns(equalToSomeState)
                 .Returns(goalState);
 
-            var subject = new GraphSearch<TestState>();
+            var subject = new GraphSearch<TestState>(strategy.Object, equalityComparer.Object);
 
             // Act
-            subject.Execute(problem.Object, strategy.Object, equalityComparer.Object);
+            subject.Execute(problem.Object);
 
             // Assert
             problem.Verify(prob => prob.IsGoalState(equalToSomeState), Times.Never);
