@@ -3,12 +3,6 @@ using System.Collections.Generic;
 
 namespace AI.Search
 {
-    public class NoSolutionPossibleException : Exception
-    {
-        public NoSolutionPossibleException() : base() { }
-        public NoSolutionPossibleException(string message) : base(message) { }
-    }
-
     public class GraphSearch<TState>
     {
         private readonly IEqualityComparer<TState> stateEqualityComparer;
@@ -22,7 +16,7 @@ namespace AI.Search
             }
             
             this.strategy = strategy;
-            this.stateEqualityComparer = stateEqualityComparer ?? default(IEqualityComparer<TState>);
+            this.stateEqualityComparer = stateEqualityComparer ?? default(IEqualityComparer<TState>); // May still be null, but thats ok
         }
 
         // Todo, can this be made more efficient or cleaner using recursion?

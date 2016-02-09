@@ -10,7 +10,6 @@ namespace AI.Search.IntergrationTests
     public class GraphSearchIntergrationTests
     {
         // Todo - need to make terminology clear we don't repeate nodes rather than states 
-        //Todo should Fringe + EqualityComparer be on the GraphSearch declaration??
         [Fact]
         public void DepthFirstGraphSearch()
         {

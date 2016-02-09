@@ -49,6 +49,7 @@
     <Compile Include="IFringe.cs" />
     <Compile Include="IHuristic.cs" />
     <Compile Include="IProblem.cs" />
+    <Compile Include="NoSolutionPossibleException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchFringes\AStarSearchFringe.cs" />
     <Compile Include="SearchFringes\BreadthFirstSearchFringe.cs" />
