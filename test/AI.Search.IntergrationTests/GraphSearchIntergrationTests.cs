@@ -9,7 +9,6 @@ namespace AI.Search.IntergrationTests
 {
     public class GraphSearchIntergrationTests
     {
-        // Todo - need to make terminology clear we don't repeate nodes rather than states 
         [Fact]
         public void DepthFirstGraphSearch()
         {
