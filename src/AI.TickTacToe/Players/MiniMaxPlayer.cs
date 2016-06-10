@@ -1,8 +1,8 @@
 ﻿using AI.Search.Adversarial;
-using AI.TickTacToe.Players.AI;
+using AI.TicTacToe.Players.AI;
 using System.Linq;
 
-namespace AI.TickTacToe.Players
+namespace AI.TicTacToe.Players
 {
     public class MiniMaxPlayer : IPlayer
     {

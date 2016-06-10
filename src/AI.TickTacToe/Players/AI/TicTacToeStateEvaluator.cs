@@ -1,6 +1,6 @@
 ﻿using AI.Search.Adversarial;
 
-namespace AI.TickTacToe.Players.AI
+namespace AI.TicTacToe.Players.AI
 {
     public class TicTacToeStateEvaluator : IStateEvaluator<TicTacToeState>
     {

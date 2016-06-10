@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AI.TickTacToe.Players
+namespace AI.TicTacToe.Players
 {
     public interface IPlayer
     {

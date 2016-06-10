@@ -7,8 +7,8 @@
     <ProjectGuid>{4AA1C2BD-92EB-4858-AF8C-33EFF57E7515}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AI.TickTacToe</RootNamespace>
-    <AssemblyName>AI.TickTacToe</AssemblyName>
+    <RootNamespace>AI.TicTacToe</RootNamespace>
+    <AssemblyName>AI.TicTacToe</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

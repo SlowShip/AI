@@ -1,4 +1,4 @@
-﻿namespace AI.TickTacToe
+﻿namespace AI.TicTacToe
 {
     public class GameRules
     {

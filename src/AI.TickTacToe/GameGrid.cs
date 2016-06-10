@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AI.TickTacToe
+namespace AI.TicTacToe
 {
     //   a |b |c
     // 1|__|__|__

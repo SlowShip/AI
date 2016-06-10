@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace AI.TickTacToe.Players
+namespace AI.TicTacToe.Players
 {
     // Todo, create abstraction over console?
     public class ConsoleHumanPlayer : IPlayer

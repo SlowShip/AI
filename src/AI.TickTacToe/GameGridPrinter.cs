@@ -1,7 +1,7 @@
-﻿using AI.TickTacToe.Players;
+﻿using AI.TicTacToe.Players;
 using System;
 
-namespace AI.TickTacToe
+namespace AI.TicTacToe
 {
     public class GameGridPrinter
     {

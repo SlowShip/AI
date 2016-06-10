@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-// Todo Tick vs Tic?
-namespace AI.TickTacToe.Players.AI
+namespace AI.TicTacToe.Players.AI
 {
     public class TicTacToeAdversarialSearchProblem : IAdversarialSearchProblem<TicTacToeState, Move>
     {
