@@ -62,7 +62,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AI.Search.Adversarial\AI.Search.Adversarial.csproj">
+    <ProjectReference Include="..\..\src\AI.Search.Adversarial\AI.Search.Adversarial.csproj">
       <Project>{7f933495-04f3-4879-a410-6e9695af19db}</Project>
       <Name>AI.Search.Adversarial</Name>
     </ProjectReference>
