@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
-
-namespace AI.Search.IntergrationTests.Problem
+﻿namespace AI.Search.IntergrationTests.Problem
 {
     // Generates the following tree.
+    // Numbers on the lines are costs
+    // h values are the huristic values
     //              Start
     //            /    | \
     //           2     |  3

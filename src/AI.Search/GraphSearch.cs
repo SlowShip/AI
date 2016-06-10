@@ -19,7 +19,6 @@ namespace AI.Search
             this.stateEqualityComparer = stateEqualityComparer ?? default(IEqualityComparer<TState>); // May still be null, but thats ok
         }
 
-        // Todo, can this be made more efficient or cleaner using recursion?
         public TState Execute(IProblem<TState> problem)
         {
             if (problem == null)

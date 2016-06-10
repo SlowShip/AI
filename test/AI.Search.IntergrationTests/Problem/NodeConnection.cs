@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AI.Search.IntergrationTests.Problem
+﻿namespace AI.Search.IntergrationTests.Problem
 {
     public class NodeConnection
     {

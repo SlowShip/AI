@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Xunit;
+﻿using Xunit;
 using System.Linq;
 using AI.Search.SearchFringes;
 using AI.Search.IntergrationTests.Problem;
