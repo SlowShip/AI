@@ -7,7 +7,6 @@ namespace AI.TicTacToe
     {
         public void PrintWinner(IPlayer player, GameGrid grid)
         {
-            // Todo, highlight winning line
             Console.WriteLine();
             Console.WriteLine($"{player.PlayerName} Wins!");
             Print(grid);

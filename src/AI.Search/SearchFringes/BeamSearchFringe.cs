@@ -10,6 +10,9 @@ namespace AI.Search.SearchFringes
         private readonly IHuristic<TState> _huristic;
         private Queue<TState> _queue;
         // Todo, maybe could be more efficient by caching huristic values
+        // Todo, beam search will lead to many more items addded then retrieved
+        // Probably want to optimse for adding
+        // Current implementaion favours fast retrieving
 
         public BeamSearchFringe(int beamWidth, IHuristic<TState> huristic)
         {

@@ -14,10 +14,13 @@ namespace AI.TicTacToe
 
         private GridValue?[,] _grid = new GridValue?[3,3];
 
-        // Todo, remove reliance on grid size = 3 or make overload private
-        public GameGrid(GridValue?[,] grid = null)
+        public GameGrid() : this(new GridValue?[3, 3])
         {
-            _grid = grid ?? new GridValue?[3, 3];
+        }
+
+        private GameGrid(GridValue?[,] grid)
+        {
+            _grid = grid;
         }
 
         public GridValue? this[char column, int row]
