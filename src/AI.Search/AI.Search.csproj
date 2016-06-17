@@ -52,6 +52,7 @@
     <Compile Include="NoSolutionPossibleException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchFringes\AStarSearchFringe.cs" />
+    <Compile Include="SearchFringes\BeamSearchFringe.cs" />
     <Compile Include="SearchFringes\BreadthFirstSearchFringe.cs" />
     <Compile Include="SearchFringes\DepthFirstSearchFringe.cs" />
     <Compile Include="SearchFringes\GreedySearchFringe.cs" />
