@@ -157,25 +157,26 @@ namespace AI.Search.Adversarial.UnitTests.TestStage
         private void InitSuccessors(TreeState parent, TreeState left, TreeState middle, TreeState right)
         {
             var successors = new List<TreeStateSuccessor>();
-            if(left != null)
+            InitSuccessors(parent, left, TreeAction.Left);
+            InitSuccessors(parent, middle, TreeAction.Middle);
+            InitSuccessors(parent, right, TreeAction.Right);
+        }
+
+        private void InitSuccessors(TreeState parent, TreeState child, TreeAction action)
+        {
+            if(child == null)
             {
-                successors.Add(new TreeStateSuccessor(parent, TreeAction.Left, left, _values[left.Name]));
-                _stateActions.Add(left, Enumerable.Concat(_stateActions[parent], new[] { TreeAction.Left }));
+                return;
             }
 
-            if (middle != null)
+            if(!_stateSuccessors.ContainsKey(parent))
             {
-                successors.Add(new TreeStateSuccessor(parent, TreeAction.Middle, middle, _values[middle.Name]));
-                _stateActions.Add(middle, Enumerable.Concat(_stateActions[parent], new[] { TreeAction.Middle }));
+                _stateSuccessors[parent] = new List<TreeStateSuccessor>();
             }
 
-            if (right != null)
-            {
-                successors.Add(new TreeStateSuccessor(parent, TreeAction.Right, right, _values[right.Name]));
-                _stateActions.Add(right, Enumerable.Concat(_stateActions[parent], new[] { TreeAction.Right }));
-            }
-
-            _stateSuccessors.Add(parent, successors);
+            var successor = new TreeStateSuccessor(parent, action, child, _values[child.Name]);
+            _stateSuccessors[parent].Add(successor);
+            _stateActions.Add(child, Enumerable.Concat(_stateActions[parent], new[] { action }));
         }
     }
 }

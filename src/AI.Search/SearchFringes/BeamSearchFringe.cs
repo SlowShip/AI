@@ -4,21 +4,24 @@ using System.Linq;
 
 namespace AI.Search.SearchFringes
 {
+    // Todo, maybe could be more efficient by caching huristic values
+    // Todo, beam search will lead to many more items addded then retrieved, Probably want to optimse for adding
     public class BeamSearchFringe<TState> : IFringeStrategy<TState>
     {
         private readonly int _beamWidth;
         private readonly IHuristic<TState> _huristic;
         private Queue<TState> _queue;
-        // Todo, maybe could be more efficient by caching huristic values
-        // Todo, beam search will lead to many more items addded then retrieved
-        // Probably want to optimse for adding
-        // Current implementaion favours fast retrieving
 
         public BeamSearchFringe(int beamWidth, IHuristic<TState> huristic)
         {
             if (beamWidth <= 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(beamWidth));
+            }
+
+            if (huristic == null)
+            {
+                throw new ArgumentNullException(nameof(huristic));
             }
 
             _beamWidth = beamWidth;

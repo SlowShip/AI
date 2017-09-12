@@ -47,6 +47,18 @@ namespace AI.Search.UnitTests.SearchFringes
         }
 
         [Fact]
+        public void Ctor_WithNullHuristic_ThrowsAnArgumentNullExpection()
+        {
+            // Act
+            Action act = () => new BeamSearchFringe<TestState>(10, null);
+
+            // Assert
+            var ex = Assert.Throws<ArgumentNullException>(act);
+            Assert.Equal("huristic", ex.ParamName);
+            Assert.NotNull(ex.Message);
+        }
+
+        [Fact]
         public void Add_WithNullState_ThrowsAnArgumentNullException()
         {
             // Arrange

@@ -15,6 +15,7 @@ namespace AI.Search.Adversarial
             _stateEvaluator = stateEvaluator;
         }
 
+        // Todo, Alpha, Beta pruning
         public AdversarialSearchSolution<TState, TAction> RunMinimax(TState startingState, int maxDepth)
         {
             if(startingState == null)
@@ -74,6 +75,8 @@ namespace AI.Search.Adversarial
             return new SearchNode(state, value, actions);
         }
 
+
+        // Todo, move agent logic out of here
         private SearchNode PickBestOptionForAgent(AgentType agentType, SearchNode a, SearchNode b)
         {
             if (a == null)
